@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Canvas Game</title>
+        <script type="text/javascript" src="assets/js/Point.class.js"></script>
+        <script type="text/javascript" src="assets/js/Registry.class.js"></script>
+        <script type="text/javascript" src="assets/js/Dimension.class.js"></script>
+        <script type="text/javascript" src="assets/js/Program.class.js"></script>
+        <script type="text/javascript" src="assets/js/Controls.class.js"></script>
+        <script type="text/javascript" src="assets/js/Engine.class.js"></script>
+        <script type="text/javascript" src="assets/js/Block.class.js"></script>
+        <script type="text/javascript" src="assets/js/Player.class.js"></script>
+        <script type="text/javascript" src="assets/js/Enemy.class.js"></script>
+        <script type="text/javascript" src="assets/js/Attributes.class.js"></script>
+
+
+
+    </head>
+    <body style="overflow:hidden;">
+
+        <canvas id="canvas" width="1000" height="700"></canvas>
+        <script type="text/javascript">
+
+        var canvas = document.querySelector('#canvas');
+
+        const registry = new Registry();
+        const engine = new Engine(canvas)
+
+        var program = new Program();
+        console.log(program);
+        </script>
+    </body>
+</html>
