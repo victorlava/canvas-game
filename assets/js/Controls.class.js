@@ -8,6 +8,10 @@ class Controls {
         this.xVelocity = 10;
         this.yVelocity = 20;
 
+        this.vx = 0;
+        this.momentum = 2; // how much momentum when moving on x axis
+        this.maxSpeed = 10;
+
         this.player = player;
 
         this.pressed = 0; // How much time the control was pressed
@@ -15,17 +19,32 @@ class Controls {
         this.initialize();
     }
     initialize() {
-        var crouched = false;
+        var animation = undefined;
 
         document.addEventListener('keydown', function(e) {
             // var timeStamp = e.timeStamp;
             switch (e.keyCode) {
                 case this.left:
-                    this.moveLeft();
+                    this.player.move(this.vx, 0);
                 break;
 
                 case this.right:
-                    this.moveRight();
+                    // this.moveRight();
+
+                    if(this.maxSpeed > this.vx) {
+                        this.vx += this.momentum;
+                    }
+
+
+                    console.log('x velocity: ' + this.vx);
+                    console.log('start running');
+                    // console.log(animation);
+                    this.player.move(this.vx, 0);
+                    // console.log(e);
+                    // START MOVING RIGHT
+
+
+
                 break;
 
                 case this.down:
@@ -36,7 +55,7 @@ class Controls {
                 break;
 
                 case this.up:
-                    this.doJump();
+                    this.player.gravitate();
                     // this.timePressed(e);
                 break;
                 default:
@@ -46,6 +65,15 @@ class Controls {
 
         document.addEventListener('keyup', function(e) {
             switch(e.keyCode) {
+                case this.right:
+                    this.vx = 0;
+                    this.player.move(this.vx, 0);
+
+                    console.log('stop running');
+                    console.log('x velocity: ' + this.vx);
+                    // this.player.move(0, undefined, true);
+                    console.log(animation);
+                break;
                 case this.down:
                     if(this.player.attr.get('crouched') == true) {
                         this.doCrouchUp();
@@ -66,9 +94,6 @@ class Controls {
     }
     doCrouchUp() {
         this.player.crouchUp();
-    }
-    doJump() {
-        this.player.gravitate();
     }
     timePressed(pressed, timestamp) {
         this.pressed = timestamp - pressed;

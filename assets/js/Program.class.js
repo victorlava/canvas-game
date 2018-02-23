@@ -6,8 +6,8 @@ class Program {
             enemy = new Enemy();
 
         player.dimensions.setSize(20, 100);
-        player.moveTo(30, 100);
-        player.gravitate(); // turns on gravity
+        player.moveTo(100, 400); 
+        // player.gravitate(); // turns on gravity
 
         var controls = new Controls(player);
 

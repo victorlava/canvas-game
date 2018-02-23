@@ -8,7 +8,9 @@ class Block {
         this.type = 'block';
         this.gravity = .2;
         this.vx = 0;
-        this.vy = -15;
+        this.vy = -7;
+        this.animation = false;
+
 
         // Registers block on the registry
         registry.register(this);
@@ -23,12 +25,23 @@ class Block {
         engine.draw(this);
     }
     move(x, y) {
+
+        requestAnimationFrame(()=>this.move(x,y));
+
         this.dimensions.move(x, y);
         engine.clear();
         engine.draw(this);
+
+        // doesn't work
+        // if(stop) {
+        //     cancelAnimationFrame(()=>this.move(x,y)); console.log(animation);
+        //  }
+
+        // return animation;
     }
+
     gravitate() {
-        var id = requestAnimationFrame(()=>this.gravitate());
+        var animation = requestAnimationFrame(()=>this.gravitate());
         engine.clear();
 
         var oldDimensions = this.dimensions,
@@ -53,9 +66,11 @@ class Block {
 			// then the ball will stick to bottom :D
 
 			// Velocity x
-			this.vx = 2;
+			this.vx = 0;
 			// Velocity y
-			this.vy = -4;
+			this.vy = -7;
+
+            cancelAnimationFrame(animation);
 		}
 
         if(this.dimensions.y + this.dimensions.height < canvas.height) {
@@ -63,6 +78,8 @@ class Block {
         }
 
         engine.draw(this);
+
+        return animation;
     }
 
 }

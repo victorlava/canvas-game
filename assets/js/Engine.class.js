@@ -33,7 +33,7 @@ class Engine {
 
             }
 
-        console.log(object);
+        // console.log(object);
 
     }
 }
