@@ -12,6 +12,11 @@ class Engine {
     clear() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
+    text(x, y, content) {
+        this.ctx.font = "21px Arial";
+        this.ctx.fillStyle = "red";
+        this.ctx.fillText(content, x, y);
+    }
     draw(object) {
         var dimensions = object.dimensions,
             type = object.type;

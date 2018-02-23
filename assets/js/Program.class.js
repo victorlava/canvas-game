@@ -6,12 +6,13 @@ class Program {
             enemy = new Enemy();
 
         player.dimensions.setSize(20, 100);
-        player.moveTo(10, 10);
+        player.moveTo(30, 100);
+        player.gravitate(); // turns on gravity
 
         var controls = new Controls(player);
 
-        grass.dimensions.setSize(20, 20);
-        grass.setTo(20, 20);
+        // grass.dimensions.setSize(20, 20);
+        // grass.setTo(20, 20);
 
                 // player.dimensions.moveTo(100, 100);
         console.log(registry);
