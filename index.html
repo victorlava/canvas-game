@@ -8,7 +8,7 @@
         <script type="text/javascript" src="assets/js/Dimension.class.js"></script>
         <script type="text/javascript" src="assets/js/Program.class.js"></script>
         <script type="text/javascript" src="assets/js/Controls.class.js"></script>
-        <script type="text/javascript" src="assets/js/Svg.class.js"></script>
+        <script type="text/javascript" src="assets/js/Assets.class.js"></script>
         <script type="text/javascript" src="assets/js/Engine.class.js"></script>
         <script type="text/javascript" src="assets/js/Block.class.js"></script>
         <script type="text/javascript" src="assets/js/Player.class.js"></script>
@@ -28,7 +28,7 @@
 
         var canvas = document.querySelector('#canvas'),
             ctx = canvas.getContext('2d'),
-            svg = new Svg();
+            assets = new Assets();
 
         const registry = new Registry();
         const engine = new Engine(canvas, ctx);

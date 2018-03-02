@@ -23,11 +23,11 @@ class Engine {
         this.ctx.fillStyle = "red";
         this.ctx.fillText(content, x, y);
     }
-    drawSprite(sprite) {
+    startSprite(sprite, x, y) {
         // console.log(sprite);
         // requestAnimationFrame(()=>this.animate());
 
-        requestAnimationFrame(()=>this.drawSprite(sprite));
+        requestAnimationFrame(()=>this.startSprite(sprite, x, y));
 
             // this.sx++;
             // if(sprite.width == this.sx) { this.sx = 0; }
@@ -56,8 +56,8 @@ class Engine {
                                 0, // sy
                                 sprite.width / this.numberOfFrames, // sw
                                 sprite.height, // sh
-                                0, // dx
-                                0, // dy
+                                x, // dx
+                                y, // dy
                                 sprite.width / this.numberOfFrames, // dw
                                 sprite.height); // dh
 
@@ -70,7 +70,11 @@ class Engine {
 
             switch (type) {
                 case 'player':
+                    // var coordinatesText = 'x: ' + dimensions.x + ', y: ' + dimensions.y;
+
+                    // this.startSprite(assets.player.run, 0, 0);
                     this.rectangle(dimensions.x, dimensions.y, dimensions.width, dimensions.height, 'blue');
+                    // engine.text(dimensions.x, dimensions.y, coordinatesText);
                 break;
 
                 case 'block':

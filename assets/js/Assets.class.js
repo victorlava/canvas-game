@@ -1,7 +1,6 @@
-class Svg {
+class Assets {
 
     constructor(ctx) {
-        this.ctx = ctx;
         this.assetsPath = 'assets/img/';
         this.assets = false;
 
@@ -9,17 +8,17 @@ class Svg {
     }
 
     initialize() {
-        this.assets = {
-            player: {
-                run: this.load('character/run.png')
+        this.player = {
+                run: this.load('character/run.png'),
+                jump: this.load('character/jump.png'),
+                landing: this.load('character/landing.png')
             }
-        };
+
     }
 
     load(path) {
         var img = new Image();
             img.src = this.assetsPath + path;
-
         return img;
     }
 

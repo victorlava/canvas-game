@@ -86,6 +86,7 @@ class Block {
         this.dimensions.move(this.vx, 0);
         engine.clear();
         engine.draw(this);
+        // engine.drawPlayer(this);
 
     }
     move(x, y) {

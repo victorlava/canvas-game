@@ -11,7 +11,6 @@ class Program {
 
         var controls = new Controls(player);
 
-        engine.drawSprite(svg.assets.player.run);
         // console.log(svg.assets.player.run.width);
 
         // console.log(svg.assets.player.run.frame);
