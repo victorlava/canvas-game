@@ -5,12 +5,10 @@ class Controls {
         this.right = 39;
         this.down = 40;
 
-        this.xVelocity = 10;
-        this.yVelocity = 20;
-
-        this.vx = 0;
-        this.momentum = 2; // how much momentum when moving on x axis
-        this.maxSpeed = 10;
+        this.fired = {
+            right: false,
+            left: false
+        }
 
         this.player = player;
 
@@ -19,32 +17,24 @@ class Controls {
         this.initialize();
     }
     initialize() {
-        var animation = undefined;
+        var animation = undefined,
+            movingRight = false;
 
         document.addEventListener('keydown', function(e) {
             // var timeStamp = e.timeStamp;
             switch (e.keyCode) {
                 case this.left:
-                    this.player.move(this.vx, 0);
+                    if(this.fired.left == false){
+                        this.fired.left = true;
+                        this.player.moveLeft();
+                    }
                 break;
 
                 case this.right:
-                    // this.moveRight();
-
-                    if(this.maxSpeed > this.vx) {
-                        this.vx += this.momentum;
+                    if(this.fired.right == false){
+                        this.fired.right = true;
+                        this.player.moveRight();
                     }
-
-
-                    console.log('x velocity: ' + this.vx);
-                    console.log('start running');
-                    // console.log(animation);
-                    this.player.move(this.vx, 0);
-                    // console.log(e);
-                    // START MOVING RIGHT
-
-
-
                 break;
 
                 case this.down:
@@ -66,13 +56,12 @@ class Controls {
         document.addEventListener('keyup', function(e) {
             switch(e.keyCode) {
                 case this.right:
-                    this.vx = 0;
-                    this.player.move(this.vx, 0);
-
-                    console.log('stop running');
-                    console.log('x velocity: ' + this.vx);
-                    // this.player.move(0, undefined, true);
-                    console.log(animation);
+                    this.player.stop();
+                    this.fired.right = false;
+                break;
+                case this.left:
+                    this.player.stop();
+                    this.fired.left = false;
                 break;
                 case this.down:
                     if(this.player.attr.get('crouched') == true) {

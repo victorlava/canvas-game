@@ -9,7 +9,14 @@ class Block {
         this.gravity = .2;
         this.vx = 0;
         this.vy = -7;
-        this.animation = false;
+        this.momentum = 0.05; // how much momentum when moving on x axis
+        this.maxSpeed = 3;
+
+        this.animations = {
+            right: false,
+            left: false,
+            stop: false
+        }
 
 
         // Registers block on the registry
@@ -24,11 +31,72 @@ class Block {
         engine.clear();
         engine.draw(this);
     }
+    stop() {
+
+        this.animations.stop = requestAnimationFrame(()=>this.stop());
+
+        if(this.vx > 0) { // Moving right
+            this.vx -= this.momentum * 2;
+            if(this.vx < 0) {
+                cancelAnimationFrame(this.animations.right);
+                cancelAnimationFrame(this.animations.stop);
+                this.animations.stop = false;
+                this.animations.right = false;
+                this.vx = 0;
+            }
+        }
+        else if(this.vx < 0) { // Moving left
+            this.vx -= -this.momentum * 2;
+            if(this.vx > 0) {
+                cancelAnimationFrame(this.animations.left);
+                cancelAnimationFrame(this.animations.stop);
+                this.animations.stop = false;
+                this.animations.left = false;
+                this.vx = 0;
+            }
+        }
+
+
+
+    }
+    moveLeft() {
+
+        this.animations.left = requestAnimationFrame(()=>this.moveLeft());
+
+        // console.log(-this.maxSpeed);
+        if(-this.maxSpeed < this.vx) {
+            this.vx -= this.momentum;
+            console.log(this.vx);
+        }
+
+        this.dimensions.move(this.vx, 0);
+        engine.clear();
+        engine.draw(this);
+
+    }
+    moveRight() {
+
+        this.animations.right = requestAnimationFrame(()=>this.moveRight());
+
+        if(this.maxSpeed > this.vx) {
+            this.vx += this.momentum;
+            console.log(this.vx);
+        }
+
+        this.dimensions.move(this.vx, 0);
+        engine.clear();
+        engine.draw(this);
+
+    }
     move(x, y) {
 
         requestAnimationFrame(()=>this.move(x,y));
 
-        this.dimensions.move(x, y);
+        if(this.maxSpeed > this.vx) {
+            this.vx += this.momentum;
+        }
+
+        this.dimensions.move(this.vx, y);
         engine.clear();
         engine.draw(this);
 
@@ -79,7 +147,6 @@ class Block {
 
         engine.draw(this);
 
-        return animation;
     }
 
 }
