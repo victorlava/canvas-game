@@ -6,10 +6,15 @@ class Program {
             enemy = new Enemy();
 
         player.dimensions.setSize(20, 100);
-        player.moveTo(100, 400); 
+        player.moveTo(100, 400);
         // player.gravitate(); // turns on gravity
 
         var controls = new Controls(player);
+
+        engine.drawSprite(svg.assets.player.run);
+        // console.log(svg.assets.player.run.width);
+
+        // console.log(svg.assets.player.run.frame);
 
         // grass.dimensions.setSize(20, 20);
         // grass.setTo(20, 20);
