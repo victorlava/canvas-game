@@ -5,19 +5,13 @@ class Program {
             player = new Player(),
             enemy = new Enemy();
 
-        player.dimensions.setSize(20, 100);
-        engine.moveTo(player, 100, 400)
-        // player.moveTo(100, 400);
-        // player.gravitate(); // turns on gravity
-
         var controls = new Controls(player);
 
-        // console.log(svg.assets.player.run.width);
+        player.dimensions.setSize(20, 100);
+        engine.setTo(player, 100, 400)
 
-        // console.log(svg.assets.player.run.frame);
-
-        // grass.dimensions.setSize(20, 20);
-        // grass.setTo(20, 20);
+        grass.dimensions.setSize(20, 20);
+        engine.setTo(grass, 200, 400);
 
                 // player.dimensions.moveTo(100, 100);
         console.log(registry);

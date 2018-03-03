@@ -19,7 +19,8 @@ class Debug {
             text = 'x: ' + this.round(location.x) + ', y: ' + this.round(location.y);
 
         canvas.text(location.x, location.y - padding, text);
-
+    }
+    
     /**
      * Funtionc that rounds number up with the desired precision.
      * @function round

@@ -17,20 +17,24 @@ class Canvas {
         this.ticksPerFrame = 4;
         this.frameIndex = 0;
     }
+
+    clear() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
     rectangle(x, y, width, height, color) {
         this.ctx.beginPath();
         this.ctx.rect(x, y, width, height);
         this.ctx.fillStyle = color;
         this.ctx.fill();
     }
-    clear() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
+
     text(x, y, content) {
         this.ctx.font = "19px Arial";
         this.ctx.fillStyle = "red";
         this.ctx.fillText(content, x, y);
     }
+
     startSprite(sprite, x, y) {
         // console.log(sprite);
         // requestAnimationFrame(()=>this.animate());
@@ -72,27 +76,37 @@ class Canvas {
 
                                 console.log(this.frameIndex * sprite.width / this.numberOfFrames);
     }
-    draw(object) {
-        var dimensions = object.dimensions,
-            type = object.type;
 
-            switch (type) {
-                case 'player':
-                    // var coordinatesText = 'x: ' + dimensions.x + ', y: ' + dimensions.y;
+    draw(object) { // Why we need this?
 
-                    this.rectangle(dimensions.x, dimensions.y, dimensions.width, dimensions.height, 'blue');
-                    // this.startSprite(assets.player.run, 0, 0);
-                    // engine.text(dimensions.x, dimensions.y, coordinatesText);
-                break;
+        var dimensions, type;
 
-                case 'block':
-                    this.rectangle(dimensions.x, dimensions.y, dimensions.width, dimensions.height, 'grey');
-                break;
-                default:
+        // Loop through objects from registry
+        for (var i = 0; i < registry.registry.length; i++) {
 
-            }
+          dimensions = registry.registry[i].dimensions,
+          type = registry.registry[i].type;
 
-        // console.log(object);
+          switch (type) {
+              case 'player':
+                this.rectangle( dimensions.x,
+                                dimensions.y,
+                                dimensions.width,
+                                dimensions.height,
+                                'blue');
+              break;
+
+              case 'block':
+                this.rectangle( dimensions.x,
+                                dimensions.y,
+                                dimensions.width,
+                                dimensions.height,
+                                'grey');
+              break;
+
+          }
+
+        }
 
     }
 }
