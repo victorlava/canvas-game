@@ -32,6 +32,7 @@ class Engine {
         object.dimensions.setSize(object.dimensions.width, object.dimensions.height/2);
         object.dimensions.move(0, object.dimensions.height);
         canvas.clear();
+        debug.coordinates(object);
         canvas.draw(object);
         object.attr.set('crouched', true);
     }
@@ -40,6 +41,7 @@ class Engine {
         object.dimensions.setSize(object.dimensions.width, object.dimensions.height*2);
         object.dimensions.move(0, -object.dimensions.height/2);
         canvas.clear();
+        debug.coordinates(object);
         canvas.draw(object);
         object.attr.set('crouched', false);
     }
@@ -85,6 +87,7 @@ class Engine {
 
         object.dimensions.move(this.vx, 0);
         canvas.clear();
+        debug.coordinates(object);
         canvas.draw(object);
 
     }
@@ -100,8 +103,9 @@ class Engine {
 
         object.dimensions.move(this.vx, 0);
         canvas.clear();
+        debug.coordinates(object);
         canvas.draw(object);
-        // engine.drawPlayer(this);
+
 
     }
 
