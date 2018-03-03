@@ -1,3 +1,10 @@
+/**
+ * Calls a control class, which is responsible for keyboard
+ * controls and players and object movement.
+ *
+ * @class Controls
+ * @param {object} player Player object.
+ */
 class Controls {
     constructor(player) {
 
@@ -21,8 +28,33 @@ class Controls {
 
         this.initialize();
     }
-    initialize() {
 
+    /**
+     * Initializes all of the events/controls
+     * @function initialize
+     */
+    initialize() {
+        this.keyDown();
+        this.keyUp();
+    }
+
+    /**
+     * Just renaming the addEventListener function
+     * @function event
+     * @param {string} key Name of the event
+     * @param {function} callback Function to execute when the event fires
+     */
+    event(key, callback) {
+        document.addEventListener(key, function(e) {
+            callback(e);
+        });
+    }
+
+    /**
+     * Responsible for what happens on global keydown event.
+     * @function keyDown
+     */
+    keyDown() {
         this.event('keydown', function(e) {
 
             switch (e.keyCode) {
@@ -56,7 +88,13 @@ class Controls {
 
             }
         }.bind(this));
+    }
 
+    /**
+     * Responsible for what happens on global keydown event.
+     * @function keyUp
+     */
+    keyUp() {
         this.event('keyup', function(e) {
             switch(e.keyCode) {
 
@@ -81,12 +119,6 @@ class Controls {
                 break;
             }
         }.bind(this));
-    }
-
-    event(key, callback) {
-        document.addEventListener(key, function(e) {
-            callback(e);
-        });
     }
 
 }
