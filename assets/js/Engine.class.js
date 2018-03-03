@@ -1,90 +1,147 @@
+/**
+ * Calls an engine class, which is responsible for the game physics.
+ * @class Engine
+ */
 class Engine {
-    constructor(canvas, ctx) {
-        this.canvas = canvas;
-        this.ctx = ctx;
+    constructor() {
+        this.gravity = .2;
+        this.vx = 0;
+        this.vy = -7;
+        this.momentum = 0.15; // how much momentum when moving on x axis
+        this.maxSpeed = 5;
 
-        this.sx = 0;
-        this.tickCount = 0;
-        this.numberOfFrames = 8;
-        this.ticksPerFrame = 4;
-        this.frameIndex = 0;
+        this.animations = {
+            right: false,
+            left: false,
+            stop: false
+        }
     }
-    rectangle(x, y, width, height, color) {
-        this.ctx.beginPath();
-        this.ctx.rect(x, y, width, height);
-        this.ctx.fillStyle = color;
-        this.ctx.fill();
+
+    setTo(object, x, y) {
+        object.dimensions.moveTo(x, y);
+        canvas.draw(object);
     }
-    clear() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    moveTo(object, x, y) {
+        object.dimensions.moveTo(x, y);
+        canvas.clear();
+        canvas.draw(object);
     }
-    text(x, y, content) {
-        this.ctx.font = "21px Arial";
-        this.ctx.fillStyle = "red";
-        this.ctx.fillText(content, x, y);
+
+    crouch(object) {
+        object.dimensions.setSize(object.dimensions.width, object.dimensions.height/2);
+        object.dimensions.move(0, object.dimensions.height);
+        canvas.clear();
+        canvas.draw(object);
+        object.attr.set('crouched', true);
     }
-    startSprite(sprite, x, y) {
-        // console.log(sprite);
-        // requestAnimationFrame(()=>this.animate());
 
-        requestAnimationFrame(()=>this.startSprite(sprite, x, y));
-
-            // this.sx++;
-            // if(sprite.width == this.sx) { this.sx = 0; }
-
-                this.tickCount += 1;
-
-                if (this.tickCount > this.ticksPerFrame) {
-
-    				this.tickCount = 0;
-
-                    // If the current frame index is in range
-                    if (this.frameIndex < this.numberOfFrames - 1) {
-                        // Go to the next frame
-                        this.frameIndex += 1;
-                    } else {
-                        this.frameIndex = 0;
-                    }
-                }
-
-        // console.log('asd');
-
-            //context.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh)
-            this.clear();
-            this.ctx.drawImage( sprite, // image
-                                this.frameIndex * sprite.width / this.numberOfFrames, // sx
-                                0, // sy
-                                sprite.width / this.numberOfFrames, // sw
-                                sprite.height, // sh
-                                x, // dx
-                                y, // dy
-                                sprite.width / this.numberOfFrames, // dw
-                                sprite.height); // dh
-
-
-                                console.log(this.frameIndex * sprite.width / this.numberOfFrames);
+    standUp(object) {
+        object.dimensions.setSize(object.dimensions.width, object.dimensions.height*2);
+        object.dimensions.move(0, -object.dimensions.height/2);
+        canvas.clear();
+        canvas.draw(object);
+        object.attr.set('crouched', false);
     }
-    draw(object) {
-        var dimensions = object.dimensions,
-            type = object.type;
 
-            switch (type) {
-                case 'player':
-                    // var coordinatesText = 'x: ' + dimensions.x + ', y: ' + dimensions.y;
+    stop(object) {
 
-                    this.rectangle(dimensions.x, dimensions.y, dimensions.width, dimensions.height, 'blue');
-                    // this.startSprite(assets.player.run, 0, 0);
-                    // engine.text(dimensions.x, dimensions.y, coordinatesText);
-                break;
+        this.animations.stop = requestAnimationFrame(()=>this.stop(object));
 
-                case 'block':
-                    this.rectangle(dimensions.x, dimensions.y, dimensions.width, dimensions.height, 'grey');
-                break;
-                default:
-
+        if(this.vx > 0) { // Moving right
+            this.vx -= this.momentum * 2;
+            if(this.vx < 0) {
+                cancelAnimationFrame(this.animations.right);
+                cancelAnimationFrame(this.animations.stop);
+                this.animations.stop = false;
+                this.animations.right = false;
+                this.vx = 0;
             }
+        }
+        else if(this.vx < 0) { // Moving left
+            this.vx -= -this.momentum * 2;
+            if(this.vx > 0) {
+                cancelAnimationFrame(this.animations.left);
+                cancelAnimationFrame(this.animations.stop);
+                this.animations.stop = false;
+                this.animations.left = false;
+                this.vx = 0;
+            }
+        }
 
-        // console.log(object);
+
+
+    }
+
+    moveLeft(object) {
+
+        this.animations.left = requestAnimationFrame(()=>this.moveLeft(object));
+
+        // console.log(-this.maxSpeed);
+        if(-this.maxSpeed < this.vx) {
+            this.vx -= this.momentum;
+            console.log(this.vx);
+        }
+
+        object.dimensions.move(this.vx, 0);
+        canvas.clear();
+        canvas.draw(object);
+
+    }
+
+    moveRight(object) {
+
+        this.animations.right = requestAnimationFrame(()=>this.moveRight(object));
+
+        if(this.maxSpeed > this.vx) {
+            this.vx += this.momentum;
+            console.log(this.vx);
+        }
+
+        object.dimensions.move(this.vx, 0);
+        canvas.clear();
+        canvas.draw(object);
+        // engine.drawPlayer(this);
+
+    }
+
+    gravitate(object) {
+        var animation = requestAnimationFrame(()=>this.gravitate(object)),
+            currentDimensions = object.dimensions; // Used for re-positioning
+
+        canvas.clear();
+        debug.coordinates(object);
+
+        this.vy += this.gravity;
+        object.dimensions.move(this.vx, this.vy);
+
+        if (
+				object.dimensions.x + object.dimensions.width > canvas.width ||
+				object.dimensions.x - object.dimensions.width < 0 ||
+				object.dimensions.y + object.dimensions.height > canvas.height// ||
+				//ball.y - ball.radius  < 0
+			 ) {
+
+			// Re-positioning to the currentDimensions, which currently are old ones
+            object.dimensions.moveTo(currentDimensions.x, currentDimensions.y);
+
+			// If we do not re-set the velocities
+			// then the ball will stick to bottom :D
+
+			// Velocity x
+			this.vx = 0;
+			// Velocity y
+			this.vy = -7;
+
+            cancelAnimationFrame(animation);
+		}
+
+        if(object.dimensions.y + object.dimensions.height < canvas.height) {
+            // tells when an object is in the air
+            console.log('in the air');
+        }
+
+        canvas.draw(object);
 
     }
 }

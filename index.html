@@ -9,6 +9,7 @@
         <script type="text/javascript" src="assets/js/Program.class.js"></script>
         <script type="text/javascript" src="assets/js/Controls.class.js"></script>
         <script type="text/javascript" src="assets/js/Assets.class.js"></script>
+        <script type="text/javascript" src="assets/js/Canvas.class.js"></script>
         <script type="text/javascript" src="assets/js/Engine.class.js"></script>
         <script type="text/javascript" src="assets/js/Block.class.js"></script>
         <script type="text/javascript" src="assets/js/Player.class.js"></script>
@@ -28,14 +29,15 @@
         <script type="text/javascript">
 
 
-        var canvas = document.querySelector('#canvas'),
-            ctx = canvas.getContext('2d'),
+        var canvasElement = document.querySelector('#canvas'),
+            ctx = canvasElement.getContext('2d'),
             assets = new Assets();
 
 
 
         const registry = new Registry();
-        const engine = new Engine(canvas, ctx);
+        const engine = new Engine();
+        const canvas = new Canvas(canvasElement, ctx);
         const debug = new Debug(); // Debug library, delete on production
 
         var program = new Program();

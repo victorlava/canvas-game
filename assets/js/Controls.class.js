@@ -1,5 +1,6 @@
 class Controls {
     constructor(player) {
+        // Key Codes
         this.left = 37;
         this.up = 38;
         this.right = 39;
@@ -21,32 +22,30 @@ class Controls {
             movingRight = false;
 
         document.addEventListener('keydown', function(e) {
-            // var timeStamp = e.timeStamp;
+
             switch (e.keyCode) {
                 case this.left:
                     if(this.fired.left == false){
                         this.fired.left = true;
-                        this.player.moveLeft();
+                        engine.moveLeft(this.player);
                     }
                 break;
 
                 case this.right:
                     if(this.fired.right == false){
                         this.fired.right = true;
-                        this.player.moveRight();
+                        engine.moveRight(this.player);
                     }
                 break;
 
                 case this.down:
                     if(this.player.attr.get('crouched') == false) {
-                        this.doCrouchDown();
-                        // this.player.attr.set('crouched', true);
+                        engine.crouch(this.player);
                     }
                 break;
 
                 case this.up:
-                    this.player.gravitate();
-                    // this.timePressed(e);
+                    engine.gravitate(this.player);
                 break;
                 default:
 
@@ -56,35 +55,19 @@ class Controls {
         document.addEventListener('keyup', function(e) {
             switch(e.keyCode) {
                 case this.right:
-                    this.player.stop();
                     this.fired.right = false;
+                    engine.stop(this.player);
                 break;
                 case this.left:
-                    this.player.stop();
                     this.fired.left = false;
+                    engine.stop(this.player);
                 break;
                 case this.down:
                     if(this.player.attr.get('crouched') == true) {
-                        this.doCrouchUp();
-                        // this.player.attr.set('crouched', false);
+                        engine.standUp(this.player);
                     }
                 break;
             }
         }.bind(this));
-    }
-    moveLeft() {
-        this.player.move(-1 * this.xVelocity, 0);
-    }
-    moveRight() {
-        this.player.move(1 * this.xVelocity, 0);
-    }
-    doCrouchDown() {
-        this.player.crouchDown();
-    }
-    doCrouchUp() {
-        this.player.crouchUp();
-    }
-    timePressed(pressed, timestamp) {
-        this.pressed = timestamp - pressed;
     }
 }

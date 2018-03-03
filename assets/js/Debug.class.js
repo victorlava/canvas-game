@@ -7,7 +7,7 @@ class Debug {
         var location = object.dimensions,
             text = 'x: ' + location.x + ', y: ' + location.y;
 
-        engine.text(location.x, location.y, text);
+        canvas.text(location.x, location.y, text);
     }
     round(number, precision) {
       var factor = Math.pow(10, precision);
