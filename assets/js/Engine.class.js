@@ -50,7 +50,7 @@ class Engine {
 
         if(this.vx > 0) { // Moving right
             this.vx -= this.momentum * 2;
-            if(this.vx < 0) {
+            if(this.vx <= 0) {
                 cancelAnimationFrame(this.animations.right);
                 cancelAnimationFrame(this.animations.stop);
                 this.animations.stop = false;
@@ -60,7 +60,7 @@ class Engine {
         }
         else if(this.vx < 0) { // Moving left
             this.vx -= -this.momentum * 2;
-            if(this.vx > 0) {
+            if(this.vx >= 0) {
                 cancelAnimationFrame(this.animations.left);
                 cancelAnimationFrame(this.animations.stop);
                 this.animations.stop = false;
@@ -101,7 +101,6 @@ class Engine {
                 console.log(this.vx);
             }
 
-
             object.dimensions.move(this.vx, 0);
             canvas.clear();
             canvas.draw(object);
@@ -113,10 +112,10 @@ class Engine {
     rectangleCollision(first, second) {
         var collision = false;
 
-        if (first.x < second.x + second.width &&
-           first.x + first.width > second.x &&
-           first.y < second.y + second.height &&
-           first.height + first.y > second.y) {
+        if (first.x <= second.x + second.width &&
+           first.x + first.width >= second.x &&
+           first.y <= second.y + second.height &&
+           first.height + first.y >= second.y) {
                collision = true;
         }
 

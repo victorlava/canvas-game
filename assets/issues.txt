@@ -1,0 +1,6 @@
+1. When you move to the left/right at maximum speed and click the same arrow twice
+then the speed doubles
+    - I think that's because the event calls the requestAnimationFrame twice
+2. When you move to the left/right at maximum speed and change the moving direction
+you will get a glitch, which looks like sliding.
+3. When you click jump key too times, the jump messes up.
