@@ -7,6 +7,7 @@ class Controls {
         this.down = 40;
 
         this.fired = {
+            top: false,
             right: false,
             left: false
         }
@@ -45,7 +46,10 @@ class Controls {
                 break;
 
                 case this.up:
-                    engine.gravitate(this.player);
+                    if(this.fired.top == false) {
+                        this.fired.top = true;
+                        engine.gravitate(this.player);
+                    }
                 break;
                 default:
 
@@ -61,6 +65,9 @@ class Controls {
                 case this.left:
                     this.fired.left = false;
                     engine.stop(this.player);
+                break;
+                case this.up:
+                    this.fired.top = false;
                 break;
                 case this.down:
                     if(this.player.attr.get('crouched') == true) {
