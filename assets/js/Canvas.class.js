@@ -27,6 +27,7 @@ class Canvas {
         this.ctx.rect(x, y, width, height);
         this.ctx.fillStyle = color;
         this.ctx.fill();
+
     }
 
     text(x, y, content) {
@@ -77,15 +78,20 @@ class Canvas {
                                 console.log(this.frameIndex * sprite.width / this.numberOfFrames);
     }
 
-    draw(object) { // Why we need this?
-
+    draw(object, debugging = false) { // Why we need this?
+                                // debug.coordinates(object);
         var dimensions, type;
+        debugging = true;
 
         // Loop through objects from registry
         for (var i = 0; i < registry.registry.length; i++) {
 
           dimensions = registry.registry[i].dimensions,
           type = registry.registry[i].type;
+
+          if(debugging) {
+              debug.coordinates(registry.registry[i]);
+          }
 
           switch (type) {
               case 'player':
@@ -107,6 +113,5 @@ class Canvas {
           }
 
         }
-
-    }
+    } // loop end
 }

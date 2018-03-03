@@ -12,7 +12,6 @@ class Program {
 
         grass.dimensions.setSize(20, 20);
         engine.setTo(grass, 200, 400);
-
                 // player.dimensions.moveTo(100, 100);
         console.log(registry);
         // var player = new Block();
