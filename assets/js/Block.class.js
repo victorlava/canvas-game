@@ -90,13 +90,11 @@ class Block {
 
     }
     gravitate() {
-        var animation = requestAnimationFrame(()=>this.gravitate());
+        var animation = requestAnimationFrame(()=>this.gravitate()),
+            currentDimensions = this.dimensions; // Used for re-positioning
+
         engine.clear();
-
-        var oldDimensions = this.dimensions,
-            coordinatesText = 'x: ' + oldDimensions.x + ', y: ' + oldDimensions.y;
-
-        engine.text(oldDimensions.x, oldDimensions.y, coordinatesText);
+        debug.coordinates(this);
 
         this.vy += this.gravity;
         this.dimensions.move(this.vx, this.vy);
@@ -108,8 +106,8 @@ class Block {
 				//ball.y - ball.radius  < 0
 			 ) {
 
-			// Re-positioning on the base ;)
-            this.dimensions.moveTo(oldDimensions.x, oldDimensions.y);
+			// Re-positioning to the currentDimensions, which currently are old ones
+            this.dimensions.moveTo(currentDimensions.x, currentDimensions.y);
 
 			// If we do not re-set the velocities
 			// then the ball will stick to bottom :D
@@ -123,7 +121,8 @@ class Block {
 		}
 
         if(this.dimensions.y + this.dimensions.height < canvas.height) {
-            // alert('touched the bottom');
+            // tells when an object is in the air
+            console.log('in the air');
         }
 
         engine.draw(this);

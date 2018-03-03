@@ -14,6 +14,7 @@
         <script type="text/javascript" src="assets/js/Player.class.js"></script>
         <script type="text/javascript" src="assets/js/Enemy.class.js"></script>
         <script type="text/javascript" src="assets/js/Attributes.class.js"></script>
+        <script type="text/javascript" src="assets/js/Debug.class.js"></script>
 
         <style media="screen">
             canvas { border: 1px solid #000; }
@@ -26,12 +27,16 @@
         <canvas id="canvas" width="1000" height="500"></canvas>
         <script type="text/javascript">
 
+
         var canvas = document.querySelector('#canvas'),
             ctx = canvas.getContext('2d'),
             assets = new Assets();
 
+
+
         const registry = new Registry();
         const engine = new Engine(canvas, ctx);
+        const debug = new Debug(); // Debug library, delete on production
 
         var program = new Program();
         console.log(program);
