@@ -83,6 +83,7 @@ class Canvas {
         var object, dimensions, type;
         debugging = true; // Change to false on production
 
+
         // Loop through objects from registry
         for (var i = 0; i < registry.registry.length; i++) {
 
