@@ -9,8 +9,8 @@ class Block {
         this.gravity = .2;
         this.vx = 0;
         this.vy = -7;
-        this.momentum = 0.05; // how much momentum when moving on x axis
-        this.maxSpeed = 3;
+        this.momentum = 0.15; // how much momentum when moving on x axis
+        this.maxSpeed = 5;
 
         this.animations = {
             right: false,
@@ -89,26 +89,6 @@ class Block {
         // engine.drawPlayer(this);
 
     }
-    move(x, y) {
-
-        requestAnimationFrame(()=>this.move(x,y));
-
-        if(this.maxSpeed > this.vx) {
-            this.vx += this.momentum;
-        }
-
-        this.dimensions.move(this.vx, y);
-        engine.clear();
-        engine.draw(this);
-
-        // doesn't work
-        // if(stop) {
-        //     cancelAnimationFrame(()=>this.move(x,y)); console.log(animation);
-        //  }
-
-        // return animation;
-    }
-
     gravitate() {
         var animation = requestAnimationFrame(()=>this.gravitate());
         engine.clear();

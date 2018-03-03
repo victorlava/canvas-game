@@ -72,8 +72,8 @@ class Engine {
                 case 'player':
                     // var coordinatesText = 'x: ' + dimensions.x + ', y: ' + dimensions.y;
 
-                    // this.startSprite(assets.player.run, 0, 0);
                     this.rectangle(dimensions.x, dimensions.y, dimensions.width, dimensions.height, 'blue');
+                    // this.startSprite(assets.player.run, 0, 0);
                     // engine.text(dimensions.x, dimensions.y, coordinatesText);
                 break;
 
