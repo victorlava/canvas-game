@@ -39,7 +39,7 @@ class Engine {
     standUp(object) {
         object.dimensions.setSize(object.dimensions.width, object.dimensions.height*2);
         object.dimensions.move(0, -object.dimensions.height/2);
-        canvas.clear(); 
+        canvas.clear();
         canvas.draw(object);
         object.attr.set('crouched', false);
     }
@@ -90,21 +90,37 @@ class Engine {
 
     moveRight(object) {
 
-        this.animations.right = requestAnimationFrame(()=>this.moveRight(object));
+        if(!this.rectangleCollision(object.dimensions,
+                                    registry.registry[0].dimensions)) {
 
-        if(this.maxSpeed > this.vx) {
-            this.vx += this.momentum;
-            console.log(this.vx);
+            this.animations.right = requestAnimationFrame(()=>this.moveRight(object));
+
+
+            if(this.maxSpeed > this.vx) {
+                this.vx += this.momentum;
+                console.log(this.vx);
+            }
+
+
+            object.dimensions.move(this.vx, 0);
+            canvas.clear();
+            canvas.draw(object);
+
         }
-
-        object.dimensions.move(this.vx, 0);
-        canvas.clear();
-        canvas.draw(object);
 
     }
 
-    distance(first, second) {
+    rectangleCollision(first, second) {
+        var collision = false;
 
+        if (first.x < second.x + second.width &&
+           first.x + first.width > second.x &&
+           first.y < second.y + second.height &&
+           first.height + first.y > second.y) {
+               collision = true;
+        }
+
+        return collision;
     }
 
     gravitate(object) {

@@ -78,19 +78,20 @@ class Canvas {
                                 console.log(this.frameIndex * sprite.width / this.numberOfFrames);
     }
 
-    draw(object, debugging = false) { // Why we need this?
-                                // debug.coordinates(object);
-        var dimensions, type;
-        debugging = true;
+    draw(object, debugging = false) { // Why we need object here?
+
+        var object, dimensions, type;
+        debugging = true; // Change to false on production
 
         // Loop through objects from registry
         for (var i = 0; i < registry.registry.length; i++) {
 
-          dimensions = registry.registry[i].dimensions,
-          type = registry.registry[i].type;
+          object = registry.registry[i];
+          dimensions = object.dimensions,
+          type = object.type;
 
           if(debugging) {
-              debug.coordinates(registry.registry[i]);
+              debug.coordinates(object);
           }
 
           switch (type) {
