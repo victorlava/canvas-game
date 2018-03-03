@@ -1,11 +1,16 @@
 class Controls {
     constructor(player) {
+
         // Key Codes
         this.left = 37;
         this.up = 38;
         this.right = 39;
         this.down = 40;
 
+        /*
+        This is for stopping continous
+        propogation of the keyboard controls
+        */
         this.fired = {
             top: false,
             right: false,
@@ -14,22 +19,26 @@ class Controls {
 
         this.player = player;
 
-        this.pressed = 0; // How much time the control was pressed
-
         this.initialize();
     }
     initialize() {
-        var animation = undefined,
-            movingRight = false;
 
-        document.addEventListener('keydown', function(e) {
+        this.event('keydown', function(e) {
 
             switch (e.keyCode) {
+
                 case this.left:
                     if(this.fired.left == false){
                         this.fired.left = true;
                         engine.moveLeft(this.player);
                     }
+                break;
+
+                case this.up:
+                if(this.fired.top == false) {
+                    this.fired.top = true;
+                    engine.gravitate(this.player);
+                }
                 break;
 
                 case this.right:
@@ -45,30 +54,26 @@ class Controls {
                     }
                 break;
 
-                case this.up:
-                    if(this.fired.top == false) {
-                        this.fired.top = true;
-                        engine.gravitate(this.player);
-                    }
-                break;
-                default:
-
             }
         }.bind(this));
 
-        document.addEventListener('keyup', function(e) {
+        this.event('keyup', function(e) {
             switch(e.keyCode) {
-                case this.right:
-                    this.fired.right = false;
-                    engine.stop(this.player);
-                break;
+
                 case this.left:
                     this.fired.left = false;
                     engine.stop(this.player);
                 break;
+
                 case this.up:
                     this.fired.top = false;
                 break;
+
+                case this.right:
+                    this.fired.right = false;
+                    engine.stop(this.player);
+                break;
+
                 case this.down:
                     if(this.player.attr.get('crouched') == true) {
                         engine.standUp(this.player);
@@ -77,4 +82,11 @@ class Controls {
             }
         }.bind(this));
     }
+
+    event(key, callback) {
+        document.addEventListener(key, function(e) {
+            callback(e);
+        });
+    }
+
 }
